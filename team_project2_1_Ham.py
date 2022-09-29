@@ -1,6 +1,5 @@
 import queue
 
-
 class State:
     def __init__(self, board, goal, moves=0):
         self.board = board
@@ -66,42 +65,42 @@ class State:
                str(self.board[6:]) + "\n" + \
                "------------------"
 
+if __name__ == '__main__':
+    # 초기 상태
+    puzzle = [1, 2, 3,
+            0, 4, 6,
+            7, 5, 8]
 
-# 초기 상태
-puzzle = [1, 2, 3,
-          0, 4, 6,
-          7, 5, 8]
+    # 목표 상태
+    goal = [1, 2, 3,
+            4, 5, 6,
+            7, 8, 0]
 
-# 목표 상태
-goal = [1, 2, 3,
-        4, 5, 6,
-        7, 8, 0]
+    # open 리스트는 우선순위 큐로 생성한다.
+    open_queue = queue.PriorityQueue()
+    open_queue.put(State(puzzle, goal))
 
-# open 리스트는 우선순위 큐로 생성한다.
-open_queue = queue.PriorityQueue()
-open_queue.put(State(puzzle, goal))
+    closed_queue = []
+    moves = 0
+    while not open_queue.empty():
 
-closed_queue = []
-moves = 0
-while not open_queue.empty():
+        #  디버깅을 위한 코드
+        #  print("START OF OPENQ")
+        #  for elem in open_queue.queue:
+        #        print(elem)
+        #  print("END OF OPENQ")
 
-    #  디버깅을 위한 코드
-    #  print("START OF OPENQ")
-    #  for elem in open_queue.queue:
-    #        print(elem)
-    #  print("END OF OPENQ")
-
-    current = open_queue.get()
-    if current.board == goal:
-        print(current)
-        print("탐색 성공")
-        print("open queue 길이=", open_queue.qsize())
-        print("closed queue 길이=", len(closed_queue))
-        break
-    moves = current.moves + 1
-    for state in current.expand(moves):
-        if state not in closed_queue and state not in open_queue.queue:
-            open_queue.put(state)
-    closed_queue.append(current)
-else:
-    print('탐색 실패')
+        current = open_queue.get()
+        if current.board == goal:
+            print(current)
+            print("탐색 성공")
+            print("open queue 길이=", open_queue.qsize())
+            print("closed queue 길이=", len(closed_queue))
+            break
+        moves = current.moves + 1
+        for state in current.expand(moves):
+            if state not in closed_queue and state not in open_queue.queue:
+                open_queue.put(state)
+        closed_queue.append(current)
+    else:
+        print('탐색 실패')

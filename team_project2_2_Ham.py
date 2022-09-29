@@ -1,10 +1,9 @@
 import random
 
-
 def Print_Board(board):
     print("┌───┬───┬───┐")
 
-    print("│ " + board[1] + " │ " + board[2] + " │ " + board[3] + " │" + "       7 8 9")
+    print("│ " + board[1] + " │ " + board[2] + " │ " + board[3] + " │" + "       1 2 3")
 
     print("├───┼───┼───┤")
 
@@ -12,7 +11,7 @@ def Print_Board(board):
 
     print("├───┼───┼───┤")
 
-    print("│ " + board[7] + " │ " + board[8] + " │ " + board[9] + " │" + "       1 2 3")
+    print("│ " + board[7] + " │ " + board[8] + " │ " + board[9] + " │" + "       7 8 9")
 
     print("└───┴───┴───┘")
 

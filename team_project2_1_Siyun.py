@@ -37,31 +37,32 @@ class State:
     def __eq__(self, other):
         return self.board == other.board
 
-puzzle = [2, 8, 3, 
-          1, 6, 4, 
-          7, 0, 5]
+if __name__ == '__main__':
+    puzzle = [2, 8, 3, 
+            1, 6, 4, 
+            7, 0, 5]
 
-goal = [1, 2, 3, 
-        8, 0, 4, 
-        7, 6, 5]
+    goal = [1, 2, 3, 
+            8, 0, 4,
+            7, 6, 5]
 
-open_queue = []
-open_queue.append(State(puzzle, goal))
-closed_queue = []
+    open_queue = []
+    open_queue.append(State(puzzle, goal))
+    closed_queue = []
 
-while len(open_queue) != 0:
-    current = open_queue.pop(0)
-    # print(current.board)
-    if current.board == goal:
-        print("success")
-        break
-    closed_queue.append(current)
-    states = current.expand()
-    costs = [s.cost for s in states]
-    for state in states:
-        if (state in closed_queue) or (state in open_queue):
-            continue
-        else:
-            if min(costs) == state.cost:
-                open_queue.append(state)
-                print(state.board, state.moves, state.heuristic, state.cost)
+    while len(open_queue) != 0:
+        current = open_queue.pop(0)
+        # print(current.board)
+        if current.board == goal:
+            print("success")
+            break
+        closed_queue.append(current)
+        states = current.expand()
+        costs = [s.cost for s in states]
+        for state in states:
+            if (state in closed_queue) or (state in open_queue):
+                continue
+            else:
+                if min(costs) == state.cost:
+                    open_queue.append(state)
+                    print(state.board, state.moves, state.heuristic, state.cost)
