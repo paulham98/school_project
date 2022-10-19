@@ -17,7 +17,7 @@ class Chromosome:
                 i += 1
     
     def cal_fitness(self):		# 적합도를 계산한다. 
-        self.fitness = 0;
+        self.fitness = 0
         value = 0
         for i in range(SIZE):
             value += self.genes[i]*pow(2,SIZE-1-i)
@@ -37,7 +37,7 @@ def print_p(pop):
 
 # 선택 연산
 def select(pop):
-    max_value  = sum([c.cal_fitness() for c in population])
+    max_value  = sum([c.cal_fitness() for c in pop])
     pick    = random.uniform(0, max_value)
     current = 0
     
@@ -65,40 +65,42 @@ def mutate(c):
             else:
                 c.genes[i] = 0
 
-# 메인 프로그램
-population = []
-i=0
 
-# 초기 염색체를 생성하여 객체 집단에 추가한다. 
-while i<POPULATION_SIZE:
-    population.append(Chromosome())
-    i += 1
+if __name__ == '__main__':
+    # 메인 프로그램
+    population = []
+    i=0
 
-count=0
-population.sort(key=lambda x: x.cal_fitness(), reverse=True)
-print("세대 번호=", count)
-print_p(population)
-count=1
+    # 초기 염색체를 생성하여 객체 집단에 추가한다. 
+    while i<POPULATION_SIZE:
+        population.append(Chromosome())
+        i += 1
 
-while population[0].cal_fitness() < 31:
-    new_pop = []
-
-    # 선택과 교차 연산
-    for _ in range(POPULATION_SIZE//2):
-        c1, c2 = crossover(population);
-        new_pop.append(Chromosome(c1));
-        new_pop.append(Chromosome(c2));
-
-    # 자식 세대가 부모 세대를 대체한다. 
-    # 깊은 복사를 수행한다. 
-    population = new_pop.copy();    
-    
-    # 돌연변이 연산
-    for c in population: mutate(c)
-
-    # 출력을 위한 정렬
+    count=0
     population.sort(key=lambda x: x.cal_fitness(), reverse=True)
     print("세대 번호=", count)
     print_p(population)
-    count += 1
-    if count > 100 : break;
+    count=1
+
+    while population[0].cal_fitness() < 31:
+        new_pop = []
+
+        # 선택과 교차 연산
+        for _ in range(POPULATION_SIZE//2):
+            c1, c2 = crossover(population)
+            new_pop.append(Chromosome(c1))
+            new_pop.append(Chromosome(c2))
+
+        # 자식 세대가 부모 세대를 대체한다. 
+        # 깊은 복사를 수행한다. 
+        population = new_pop.copy();    
+        
+        # 돌연변이 연산
+        for c in population: mutate(c)
+
+        # 출력을 위한 정렬
+        population.sort(key=lambda x: x.cal_fitness(), reverse=True)
+        print("세대 번호=", count)
+        print_p(population)
+        count += 1
+        if count > 100 : break
