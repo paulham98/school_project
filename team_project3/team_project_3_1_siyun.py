@@ -1,4 +1,5 @@
 import numpy as np
+from matplotlib import pyplot as plt
 
 POPULATION_SIZE = 10
 MUTATION_RATE = 0.05
@@ -70,35 +71,40 @@ def mutate(c):
 
 if __name__ == '__main__':
     population = []
+    fitness = []
     i=0
 
-    # 초기 염색체를 생성하여 객체 집단에 추가한다. 
     while i < POPULATION_SIZE:
         population.append(Chromosome())
         i += 1
 
     count=0
     population.sort(key=lambda x: x.cal_fitness(), reverse=True)
+    fitness.append(population[0].cal_fitness())
     print("세대 번호=", count)
     print_p(population)
     count=1
 
     while population[0].cal_fitness() < 28:
-    new_pop = []
+        new_pop = []
 
-    # crossover
-    for _ in range(POPULATION_SIZE//2):
-        c1, c2 = crossover(population)
-        new_pop.append(Chromosome(c1))
-        new_pop.append(Chromosome(c2))
+        # crossover
+        for _ in range(POPULATION_SIZE//2):
+            c1, c2 = crossover(population)
+            new_pop.append(Chromosome(c1))
+            new_pop.append(Chromosome(c2))
 
-    population = new_pop.copy();    
-    
-    # mutation
-    for c in population: mutate(c)
+        population = new_pop.copy();    
+        
+        # mutation
+        for c in population: mutate(c)
 
-    population.sort(key=lambda x: x.cal_fitness(), reverse=True)
-    print("세대 번호=", count)
-    print_p(population)
-    count += 1
-    if count > 1000 : break
+        population.sort(key=lambda x: x.cal_fitness(), reverse=True)
+        fitness.append(population[0].cal_fitness())
+        print("세대 번호=", count)
+        print_p(population)
+        count += 1
+
+        plt.plot(range(len(fitness)), fitness)
+        plt.show()
+        if count > 1000 : break

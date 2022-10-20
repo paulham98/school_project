@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from matplotlib import pyplot as plt
 
 distance = pd.read_excel('./국내 주요 도시간 거리.xlsx', header=1, index_col=0)
 
@@ -83,34 +84,40 @@ def mutate(c):
 
 if __name__ == '__main__':
     population = []
-i=0
+    fitness = []
+    i=0
 
-while i < POPULATION_SIZE:
-    population.append(Chromosome())
-    i += 1
+    while i < POPULATION_SIZE:
+        population.append(Chromosome())
+        i += 1
 
-count=0
-population.sort(key=lambda x: x.cal_fitness())
-print("세대 번호=", count)
-print_p(population)
-count=1
-
-while population[0].cal_fitness() > 988:
-    new_pop = []
-
-    for _ in range(POPULATION_SIZE//2):
-        population.sort(key=lambda x: x.cal_fitness())
-        c1, c2 = crossover(population)
-        new_pop.append(Chromosome(c1))
-        new_pop.append(Chromosome(c2))
-
-    population = new_pop.copy();    
-    
-    for c in population: mutate(c)
-
+    count=0
     population.sort(key=lambda x: x.cal_fitness())
+    fitness.append(population[0].cal_fitness())
     print("세대 번호=", count)
     print_p(population)
-    count += 1
+    count=1
 
-    if count > 1000: break
+    while population[0].cal_fitness() > 988:
+        new_pop = []
+
+        for _ in range(POPULATION_SIZE//2):
+            population.sort(key=lambda x: x.cal_fitness())
+            c1, c2 = crossover(population)
+            new_pop.append(Chromosome(c1))
+            new_pop.append(Chromosome(c2))
+
+        population = new_pop.copy();    
+        
+        for c in population: mutate(c)
+
+        population.sort(key=lambda x: x.cal_fitness())
+        fitness.append(population[0].cal_fitness())
+        print("세대 번호=", count)
+        print_p(population)
+        count += 1
+
+        plt.plot(range(len(fitness)), fitness)
+        plt.show()
+
+        if count > 1000: break
