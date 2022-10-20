@@ -113,4 +113,4 @@ while population[0].cal_fitness() > 988:
     print_p(population)
     count += 1
 
-    # if count > 100: break
+    if count > 1000: break
