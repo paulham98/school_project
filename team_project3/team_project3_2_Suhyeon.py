@@ -61,8 +61,8 @@ def crossover(pop):
     father = select(pop)
     mother = select(pop)
 
-    lindex = random.randint(1, SIZE - 3)
-    rindex = random.randint(lindex+1, SIZE -2)
+    lindex = random.randint(0, SIZE-2)
+    rindex = random.randint(lindex+1, SIZE-1)
     
     fsel = father.genes[lindex:rindex]
     msel = mother.genes[lindex:rindex]
