@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 
-distance = pd.read_excel('./국내 주요 도시간 거리.xlsx', header=1, index_col=0)
+distance = pd.read_excel('./team_project3/국내 주요 도시간 거리.xlsx', header=1, index_col=0)
 
 distance = distance.astype(int)
 
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     print_p(population)
     count=1
 
-    while population[0].cal_fitness() > 988:
+    while population[0].cal_fitness() > 1018:
         new_pop = []
 
         for _ in range(POPULATION_SIZE//2):
@@ -118,6 +118,8 @@ if __name__ == '__main__':
         count += 1
 
         plt.plot(range(len(fitness)), fitness)
-        plt.show()
+        # plt.show()
 
         if count > 1000: break
+
+    plt.show()
