@@ -106,5 +106,7 @@ if __name__ == '__main__':
         count += 1
 
         plt.plot(range(len(fitness)), fitness)
-        plt.show()
+        # plt.show()
         if count > 1000 : break
+
+    plt.show()
