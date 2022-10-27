@@ -113,7 +113,7 @@ print(count, "th population")
 print_p(population)
 count=1
 
-while population[0].cal_fitness() < 334*9 - 988:
+while population[0].cal_fitness() < 334*9 - 1018:
     new_pop = []
 
     for _ in range(POPULATION_SIZE//2):
