@@ -54,24 +54,22 @@ def print_p(pop):
 
 # 선택 연산
 def select(pop):
-    # max_value = sum([c.cal_fitness() for c in pop])
-    # pick = random.uniform(0, max_value)
-    pick = np.random.randint(0, SIZE)
-    return pop[pick]
-    # current = 0
-    #
-    # # 룰렛휠에서 어떤 조각에 속하는지를 알아내는 루프
-    # for c in pop:
-    #     current += c.cal_fitness()
-    #     if current > pick:
-    #         return c
+    max_value = sum([c.cal_fitness() for c in pop])
+    pick = random.uniform(0, max_value)
+    current = 0
+
+    # 룰렛휠에서 어떤 조각에 속하는지를 알아내는 루프
+    for c in pop:
+        current += c.cal_fitness()
+        if current > pick:
+            return c
 
 
 # 교차 연산
 def crossover(pop):
     father = select(pop)
     mother = select(pop)
-    index = np.sort(np.random.choice(range(1, SIZE - 1), size=2, replace=False))
+    index = np.random.randint(1, SIZE-2)
     child1 = father.genes[:index] + mother.genes[index:]
     child2 = mother.genes[:index] + father.genes[index:]
     return child1, child2
